@@ -61,17 +61,19 @@ describe('driver e2e', () => {
   });
 
   describe('startAndroidSession', () => {
-    it.skip('starts a session', async function () {
+    it('starts a session', async function () {
       this.timeout(20000);
 
       let driver = new AndroidDriver();
       let caps = {
-        app: apiDemos
+        app: apiDemos,
+        appPackage: 'io.appium.android.apis',
+        platformName: 'Android',
+        deviceName: 'emulator'
       };
       driver.caps = caps;
       driver.opts = caps;
-
-      await driver.startAndroidSession(caps);
+      await driver.createSession(caps);
 
       let val = await driver.bootstrap.sendCommand('action', {action: 'source'});
       val.length.should.be.above(500);
